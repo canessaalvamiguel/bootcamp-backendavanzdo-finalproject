@@ -14,6 +14,7 @@ public class ProductService {
 
   ProductRepository productRepository;
 
+  //TODO: Implement pagination
   public List<Product> getProducts(){
     return productRepository.findAll();
   }
