@@ -4,10 +4,9 @@ import dev.canessaalvamiguel.serviceproducts.entities.Product;
 import dev.canessaalvamiguel.serviceproducts.service.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -18,9 +17,12 @@ public class ProductController {
   ProductService productService;
 
   @GetMapping
-  public ResponseEntity<List<Product>> getProducts(){
+  public ResponseEntity<Page<Product>> getProducts(
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size
+  ){
     log.info("Getting all products");
-    return ResponseEntity.ok(productService.getProducts());
+    return ResponseEntity.ok(productService.getProducts(page, size));
   }
 
   @GetMapping("/{productId}")
@@ -36,8 +38,12 @@ public class ProductController {
   }
 
   @GetMapping("/company/{companyId}")
-  public ResponseEntity<List<Product>> getProductsByCompanyId(@PathVariable Long companyId){
+  public ResponseEntity<Page<Product>> getProductsByCompanyId(
+      @PathVariable Long companyId,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size
+  ){
     log.info("Getting products by company id: {}", companyId);
-    return ResponseEntity.ok(productService.getProductsByCompanyId(companyId));
+    return ResponseEntity.ok(productService.getProductsByCompanyId(companyId, page, size));
   }
 }

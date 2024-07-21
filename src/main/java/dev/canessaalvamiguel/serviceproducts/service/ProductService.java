@@ -4,9 +4,10 @@ import dev.canessaalvamiguel.serviceproducts.entities.Product;
 import dev.canessaalvamiguel.serviceproducts.exceptions.NotFoundException;
 import dev.canessaalvamiguel.serviceproducts.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -14,9 +15,9 @@ public class ProductService {
 
   ProductRepository productRepository;
 
-  //TODO: Implement pagination
-  public List<Product> getProducts(){
-    return productRepository.findAll();
+  public Page<Product> getProducts(int page, int size){
+    Pageable pageable = PageRequest.of(page, size);
+    return productRepository.findAll(pageable);
   }
 
   public Product getProductById(Long product){
@@ -30,7 +31,8 @@ public class ProductService {
     return productRepository.save(product);
   }
 
-  public List<Product> getProductsByCompanyId(Long companyId) {
-    return productRepository.findByCompanyId(companyId);
+  public Page<Product> getProductsByCompanyId(Long companyId, int page, int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    return productRepository.findByCompanyId(companyId, pageable);
   }
 }
