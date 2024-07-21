@@ -20,7 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
+      target: production
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/products?useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
@@ -39,3 +39,5 @@ volumes:
 
 networks:
   my_product_service_network:
+    driver: bridge
+    name: my_product_service_network
