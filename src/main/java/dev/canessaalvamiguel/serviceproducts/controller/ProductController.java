@@ -34,4 +34,10 @@ public class ProductController {
     log.info("Creating new product: {}", product);
     return ResponseEntity.ok(productService.createProduct(product));
   }
+
+  @GetMapping("/company/{companyId}")
+  public ResponseEntity<List<Product>> getProductsByCompanyId(@PathVariable Long companyId){
+    log.info("Getting products by company id: {}", companyId);
+    return ResponseEntity.ok(productService.getProductsByCompanyId(companyId));
+  }
 }
