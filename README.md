@@ -76,3 +76,34 @@ This will set up the network, create the necessary volumes, build the Docker ima
 - The application uses RSA certificates for securing communications.
 - All endpoints are secured using Spring Security.
 - Authentication is handled via Basic Auth, with JWTs issued for subsequent requests.
+
+## Endpoints
+
+### Authenticate Endpoint
+
+Authenticate using basic auth to obtain a JWT token.
+
+- **Endpoint:** `POST {{base_url_product_service}}/api/v1/auth/token`
+- **Example URL:** `http://35.223.99.149:8081/api/v1/auth/token`
+- **Authentication:** Basic Auth (username and password)
+
+**Curl Command:**
+```sh
+curl -X POST "{{base_url_product_service}}/api/v1/auth/token" \
+     -H "accept: application/json" \
+     -H "Authorization: Basic $(echo -n 'user:password' | base64)"
+```
+
+### Get All Products for a Company
+Retrieve a list of products for a company. Requires a Bearer token obtained from the authentication step.
+
+- **Endpoint:** `{{base_url_product_service}}/api/v1/products/company/1?page=0&size=5`
+- **Example** `URL: http://35.223.99.149:8081/api/v1/products/company/1`
+
+**Curl Command:**
+```sh
+curl -X GET "{{base_url_product_service}}/api/v1/products/company/1?page=0&size=5" \
+     -H "accept: application/json" \
+     -H "Authorization: Bearer <your_jwt_token>"
+
+```
